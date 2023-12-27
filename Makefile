@@ -4,4 +4,4 @@ build:
 push:
 	docker push shynome/libp2p-wg2
 run: build
-	docker run --rm -ti --name wg2 --privileged --net host shynome/libp2p-wg2 -key 1 -c
+	docker run --rm -ti --name wg2 --privileged --net host shynome/libp2p-wg2 -key 1

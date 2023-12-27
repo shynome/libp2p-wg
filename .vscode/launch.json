@@ -10,7 +10,7 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}/cmd/wg2",
-      "args": ["-key", "0"]
+      "args": ["-key", "0", "-c"]
     }
   ]
 }
