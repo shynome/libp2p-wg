@@ -88,7 +88,7 @@ func (ep *Outboud) Connect() (err error) {
 		if len(peer.Addrs) == 0 {
 			continue
 		}
-		ep.Stream, err = host.NewStream(ctx, peer.ID, ProtocolID)
+		ep.Stream, err = host.NewStream(context.Background(), peer.ID, ProtocolID)
 		if err != nil {
 			slog.Error("peer连接失败", "peer id", peer.ID, "err", err)
 			continue

@@ -34,11 +34,13 @@ var keys = []peer{
 }
 
 var args struct {
-	key int
+	key         int
+	autoConnect bool
 }
 
 func init() {
 	flag.IntVar(&args.key, "key", -1, "选择指定")
+	flag.BoolVar(&args.autoConnect, "c", false, "自动连接节点")
 }
 
 func main() {
@@ -79,7 +81,7 @@ func main() {
 
 	dev := device.NewDevice(tdev, bind, logger)
 
-	conf := genConf(rootUser, args.key)
+	conf := genConf(args.key)
 	try.To(dev.IpcSet(conf))
 
 	if rootUser {
@@ -114,7 +116,7 @@ func main() {
 	<-dev.Wait()
 }
 
-func genConf(rootUser bool, index int) string {
+func genConf(index int) string {
 	buf := bytes.NewBufferString("")
 
 	{
@@ -133,7 +135,7 @@ func genConf(rootUser bool, index int) string {
 		fmt.Fprintf(buf, "public_key=%s\n", hex.EncodeToString(pubkey[:]))
 		fmt.Fprintf(buf, "allowed_ip=%s\n", peer.ip)
 		fmt.Fprintf(buf, "endpoint=%s\n", hex.EncodeToString(pubkey[:]))
-		if !rootUser {
+		if args.autoConnect {
 			fmt.Fprintf(buf, "persistent_keepalive_interval=%d\n", 15)
 		}
 	}

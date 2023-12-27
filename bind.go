@@ -87,6 +87,7 @@ func (b *Bind) Open(port uint16) (fns []conn.ReceiveFunc, actualPort uint16, err
 	))
 
 	b.host.SetStreamHandler(endpoint.ProtocolID, func(s network.Stream) {
+		slog.Info("stream连接成功", "id", s.ID())
 		ep := endpoint.New(s)
 		go func() {
 			defer ep.Close()
